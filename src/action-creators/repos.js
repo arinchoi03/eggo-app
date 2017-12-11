@@ -1,3 +1,5 @@
+'use strict';
+
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
@@ -12,10 +14,18 @@ export const getRepos = function(repos) {
 
 //\//\//\//\//\ DISPATCHERS //\//\//\//\//\
 
-export const fetchRepos = function(userId) {
-  return function(dispatch) {
-    return axios.get(`https://api/github.com/users/${userId}/repos`)
-      .then(res => dispatch(getRepos(res.data)))
-  }
+// export const fetchProduct = (id) => dispatch => {
+  // axios.get(`/api/products/${id}`)
+  // .then(res => dispatch(selectProduct(res.data)))
+  // .catch(err => console.error('Error fetching the product', err))
+// }
+
+export const fetchRepos = (userId, apiKey) => dispatch => {
+  debugger
+  axios.get(`https://api.github.com/users/${userId}/repos?access_token=${apiKey}`)
+    .then(res => {
+      dispatch(getRepos(res.data))
+    })
+    .catch(err => console.error('error fetching repos'))
 }
 

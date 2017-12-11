@@ -6,6 +6,12 @@ const ReposPanel = (props) => {
   return (
     <div>
       <h1>ReposPanel</h1>
+      <ul>
+        { props.repos && props.repos.map((repo) => {
+          <li>{repo.name}</li>
+        })
+        }
+      </ul>
     </div>
   )
 }
