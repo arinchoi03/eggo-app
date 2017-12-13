@@ -8,7 +8,9 @@ const ReposPanel = (props) => {
       <h1>ReposPanel</h1>
       <ul>
         { props.repos && props.repos.map((repo) => {
-          <li>{repo.name}</li>
+          return(
+            <li key={repo.id}>{repo.name}</li>
+            )
         })
         }
       </ul>

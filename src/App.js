@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 import './App.css';
-import { fetchRepos } from './action-creators/repos';
+import { setUser } from './action-creators/user';
 
 class App extends Component {
   constructor(props) {
@@ -11,6 +11,8 @@ class App extends Component {
       id: ''
       , key: ''
     }
+
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   onIdChange = (evt) => {
@@ -27,10 +29,11 @@ class App extends Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault();
-    this.props.fetchUserRepos(this.state.id, this.state.key)
+    this.props.setUserInfo(this.state.id, this.state.key)
   }
 
   render() {
+    console.log(this.state)
     return (
       <div className="App">
         <form onSubmit={this.handleSubmit}>
@@ -38,8 +41,8 @@ class App extends Component {
           <input onChange={this.onIdChange}></input>
           <label>Github API</label>
           <input onChange={this.onKeyChange}></input>
-          <button>
-            <Link to={`/users/${this.state.id}/repos`}>Enter your EggoApp</Link>
+          <button type="submit">
+            Enter your EggoApp
           </button>
         </form>
       </div>
@@ -49,8 +52,9 @@ class App extends Component {
 
 const mapStateToProps = null
 const mapDispatch = dispatch => ({
-  fetchUserRepos: (userId, apiKey) => {
-    dispatch(fetchRepos(userId, apiKey))
+  setUserInfo: (userId, apiKey) => {
+    dispatch(setUser(userId, apiKey))
+    browserHistory.push(`/users/${userId}/repos`)
   }
 })
 

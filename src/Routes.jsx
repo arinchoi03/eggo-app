@@ -13,18 +13,28 @@ import Repos from './components/Repos';
 import Issues from './components/Issues';
 import NotFound from './components/NotFound';
 
-// import { fetchRepos } from './action-creators/repos'
+import { fetchRepos } from './action-creators/repos'
 
-const Routes = () => {
+const Routes = (props) => {
+  debugger
   return(
   <Router history={browserHistory}>
     <Route path="/" component={App} />
-    <Route path="/users/:userId/repos" component={Repos} />
+    <Route path="/users/:userId/repos" component={Repos} onEnter={() => {
+      props.fetchUserRepos(props.user.id, props.user.key)}
+    }/>
     <Route path="/users/:userId/:repoId/issues" component={Issues} />
     <Route path='*' component={NotFound} />
   </Router>
 )}
 
 /* ------------- CONTAINER ---------------- */
+const mapStateToProps = ({user}) => ({user})
+const mapDispatch = dispatch => ({
+  fetchUserRepos: (userId, apiKey) => {
+    dispatch(fetchRepos('arinchoi03', 'fd86605bf8811aa841be957757dd6064d209aa33'))
+  }
+})
 
-export default Routes
+export default connect(mapStateToProps, mapDispatch)(Routes)
+

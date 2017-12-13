@@ -21,9 +21,9 @@ export const getRepos = function(repos) {
 // }
 
 export const fetchRepos = (userId, apiKey) => dispatch => {
-  debugger
   axios.get(`https://api.github.com/users/${userId}/repos?access_token=${apiKey}`)
     .then(res => {
+      localStorage.setItem('repos', JSON.stringify(res.data))
       dispatch(getRepos(res.data))
     })
     .catch(err => console.error('error fetching repos'))
